@@ -13,6 +13,7 @@ var Phaser = Phaser || {
 	VERSION: '2.1.3',
 	GAMES: [],
 
+    PIXI:PIXI,
     AUTO: 0,
     CANVAS: 1,
     WEBGL: 2,
