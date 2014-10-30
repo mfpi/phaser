@@ -320,7 +320,8 @@ Phaser.TilemapParser = {
         {
             //  name, firstgid, width, height, margin, spacing, properties
             var set = json.tilesets[i];
-            var newSet = new Phaser.Tileset(set.name, set.firstgid, set.tilewidth, set.tileheight, set.margin, set.spacing, set.properties);
+            var newSet = new Phaser.Tileset(set.name, set.firstgid, set.tilewidth, set.tileheight, set.margin, set.spacing, 
+                                            set.tileoffset, set.properties);
 
             if (set.tileproperties)
             {
@@ -378,8 +379,9 @@ Phaser.TilemapParser = {
                         x: json.layers[i].objects[v].x,
                         y: json.layers[i].objects[v].y,
                         visible: json.layers[i].objects[v].visible,
-                        properties: json.layers[i].objects[v].properties
-
+                        properties: json.layers[i].objects[v].properties,
+                        rotation: json.layers[i].objects[v].rotation,
+                        
                     };
 
                     objects[json.layers[i].name].push(object);

@@ -18,7 +18,7 @@
 * @param {number} [spacing=0] - The amount of spacing between each tile in the sheet.
 * @param {object} [properties] - Tileset properties.
 */
-Phaser.Tileset = function (name, firstgid, width, height, margin, spacing, properties) {
+Phaser.Tileset = function (name, firstgid, width, height, margin, spacing, offset, properties) {
 
     if (typeof width === 'undefined' || width <= 0) { width = 32; }
     if (typeof height === 'undefined' || height <= 0) { height = 32; }
@@ -54,6 +54,10 @@ Phaser.Tileset = function (name, firstgid, width, height, margin, spacing, prope
     * @property {number} tileSpacing - The spacing in pixels between each tile in the tileset.
     */
     this.tileSpacing = spacing;
+    /**
+    * @property {object} tileOffset - The offset when rendering the tile.
+    */
+    this.tileOffset = offset;
 
     /**
     * @property {object} properties - Tileset specific properties (typically defined in the Tiled editor).
@@ -112,8 +116,8 @@ Phaser.Tileset.prototype = {
             this.drawCoords[index][1],
             this.tileWidth,
             this.tileHeight,
-            x,
-            y,
+            x + this.tileOffset.x,
+            y + this.tileOffset.y,
             this.tileWidth,
             this.tileHeight
         );
