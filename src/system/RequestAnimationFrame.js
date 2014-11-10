@@ -65,6 +65,18 @@ Phaser.RequestAnimationFrame = function(game, forceSetTimeOut) {
 
 };
 
+var gameFPS = 60;
+var renderFPS = 30;
+var gameNow;
+var renderNow;
+var gameThen = Date.now();
+var renderThen = Date.now();
+var gameInterval = 1000/gameFPS;
+var renderInterval = 1000/renderFPS;
+
+var gameDelta;
+var renderDelta;
+
 Phaser.RequestAnimationFrame.prototype = {
 
     /**
@@ -91,6 +103,7 @@ Phaser.RequestAnimationFrame.prototype = {
         {
             this._isSetTimeOut = false;
 
+            this._requestFrame = false;
             this._onLoop = function (time) {
                 return _this.updateRAF(time);
             };
@@ -105,11 +118,32 @@ Phaser.RequestAnimationFrame.prototype = {
     * @method Phaser.RequestAnimationFrame#updateRAF
     */
     updateRAF: function () {
+        if (this._requestFrame === true) {
+            this._timeOutID = window.requestAnimationFrame(function() {});
+            this._requestFrame = false;
+        }
+        
+        gameNow = Date.now();
+        gameDelta = gameNow - gameThen;
 
-        this.game.update(Date.now());
-
-        this._timeOutID = window.requestAnimationFrame(this._onLoop);
-
+        var step = 1;
+        while (gameDelta > gameInterval) {
+            this.game.update(gameThen + step*gameInterval);
+            this.game.stage.updateTransform();
+            gameDelta -= gameInterval;
+            step += 1;
+        }
+        gameThen = gameNow - gameDelta;
+        
+        renderNow = Date.now();
+        renderDelta = renderNow - renderThen;
+        while (renderDelta > renderInterval) {
+            this._requestFrame = true;
+            this.game.render();
+            renderDelta -= renderInterval;
+        }
+        renderThen = renderNow - renderDelta;
+        setTimeout (this._onLoop, Math.min((gameInterval-gameDelta, renderInterval-renderDelta)));
     },
 
     /**

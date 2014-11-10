@@ -283,7 +283,7 @@ PIXI.WebGLRenderer.prototype.render = function(stage)
     }
 
     // update the scene graph
-    stage.updateTransform();
+    // stage.updateTransform();
 
     var gl = this.gl;
     

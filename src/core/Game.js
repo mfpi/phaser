@@ -686,7 +686,9 @@ Phaser.Game.prototype = {
                 this.debug.preUpdate();
             }
         }
-
+    },
+    
+    render: function () {
         if (this.renderType != Phaser.HEADLESS)
         {
             this.state.preRender();
@@ -702,7 +704,6 @@ Phaser.Game.prototype = {
                 this.context.fillRect(0, 0, 0, 0);
             }
         }
-
     },
 
     /**
