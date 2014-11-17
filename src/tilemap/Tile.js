@@ -17,6 +17,28 @@
 * @param {number} height - Height of the tile.
 */
 Phaser.Tile = function (layer, index, x, y, width, height) {
+    var flipHorizon = 0x80000000 >>> 0;
+    var flipVert =    0x40000000 >>> 0;
+    var flipDiag =    0x20000000 >>> 0;
+    
+    this.flippedHorizontal = (index & flipHorizon) >>> 0;
+    this.flippedVertical = (index & flipVert) >>> 0;
+    this.flippedDiag = (index & flipDiag) >>> 0;
+    
+    console.log (typeof (index >>> 0));
+    console.log (index >>> 0);
+    console.log (index);
+    if (index >= flipHorizon) {
+        index -= flipHorizon;
+    }
+    if (index >= flipVert) {
+        index -= flipVert;
+    }
+    if (index >= flipDiag) {
+        index -= flipDiag;
+    }       
+
+    console.log(this.flippedHorizontal, this.flippedVertical, this.flippedDiag, index);
 
     /**
     * @property {object} layer - The layer in the Tilemap data that this tile belongs to.

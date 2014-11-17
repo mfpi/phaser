@@ -89,6 +89,7 @@ Phaser.TilemapParser = {
 
             for (var x = 0; x < column.length; x++)
             {
+                console.log (parseInt(column[x], 10));
                 output[y][x] = new Phaser.Tile(map.layers[0], parseInt(column[x], 10), x, y, tileWidth, tileHeight);
             }
 
